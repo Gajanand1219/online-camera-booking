@@ -1,0 +1,917 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Icons CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <title>Document</title>
+    <style>
+           .section {
+      animation: slideDown 1.5s ease-out;
+        }
+      @keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.navbar {
+  animation: slideDown 1.0s ease-out;
+}
+.navbar-nav .nav-link {
+  position: relative;
+  font-size: 18px;
+}
+
+.navbar-nav .nav-link::after {
+  content: "";
+  position: absolute;
+  background: #295a8d;
+  height: 3px;
+  width: 0;
+  left: 0;
+  bottom: -10px;
+  transition: 0.3s;
+}
+
+.navbar-nav .nav-link:hover::after {
+  width: 100%;
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(17px);
+    opacity: 0;
+  }
+  to{
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+#home {
+  animation: fadeInUp 1s ease-out;
+}
+.custom-btn {
+    width: 180px; /* Adjust width as needed */
+    padding: 15px 30px;
+    font-size: 14px;
+    letter-spacing: 2px;
+    border-radius: 50px;
+}
+         .card-img-container {
+            overflow: hidden;
+        }
+        .card-img-top.zoom {
+            transition: transform 0.2s;
+        }
+        .card-img-top.zoom:hover {
+            transform: scale(1.1);
+            z-index: 10;
+          position: relative;
+        }
+        
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOutDown {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+}
+.card {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: transform 1s ease-out, opacity 1s ease-out;
+}
+
+.card.show {
+  animation: fadeInUp 2s ease-out forwards;
+}
+
+.card.hide {
+  animation: fadeOutDown 2s ease-out forwards;
+}
+.map-responsive {
+            overflow: hidden;
+            padding-bottom: 56.25%;
+            position: relative;
+            height: 0;
+        }
+        .map-responsive iframe {
+            left: 0;
+            top: 0;
+            height: 200px; 
+            width: 100%;
+            position: absolute;
+        }
+
+
+        @keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+} 
+
+
+        /* Floating Button */
+        #chatButton {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            background-color: blueviolet;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000; 
+
+        }
+        /* Chat Container */
+        #chatContainer {
+            width: 290px;
+            position: fixed;
+            bottom: 120px; 
+            right: 25px;
+            display: none; 
+            z-index: 1000; 
+            background-color: aqua;
+        }
+
+        #chatBox {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Button -->
+    <button id="chatButton" class="btn btn-primary">
+        <!-- <i class="fas fa-comments"></i> -->
+        <i class="fa-brands fa-rocketchat"></i>
+    </button>
+
+    <!-- Chat Container -->
+    <div id="chatContainer" class="card">
+        <div id="chatBox" class="card-body"></div>
+        <div class="card-footer">
+            <div class="input-group">
+                <input type="text" id="userInput" class="form-control" placeholder="Type your message..." />
+                <div class="input-group-append">
+                    <button id="sendButton" class="btn btn-primary">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!-- login -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm" action="login.php" method="post">
+                    <div class="form-group mb-3">
+                        <label for="email">Email address</label>
+                        <input type="email" class="form-control" placeholder="Enter email" required name="email">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" placeholder="Password" required name="password">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+  <!-- Registration Modal -->
+  <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registerModalLabel">Register</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="registerForm" action="Registration.php" method="post">
+                    <div class="form-group mb-3">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" placeholder="Enter username" required name="username">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="email">Email address</label>
+                        <input type="email" class="form-control" placeholder="Enter email" required name="email">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" placeholder="Password" required name="password">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" class="form-control" placeholder="Confirm Password" required name="conformpassword">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block mt-3">Register</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <small>Already have an account? <a href="#" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#loginModal">Sign in</a></small>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- //////////////////////////////////////////////////////////////////////////////////////////// -->
+    <!-- nav bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary sticky-top shadow-sm p-0">
+      <div class="">
+    <i class="fa fa-camera " aria-hidden="true" style="width: 30px; font-size: x-large;"></i>
+      <p class="navbar-brand nav-link text-white">Portrait Photography</p>
+        <button class="navbar-toggler " type="button" data--toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="#home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#nikon">Nikon</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#Canon">Canon</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contact">Contact</a>
+            </li>
+            <li class="nav-item">
+                <!-- <li class="nav-item"><a href="#" class="nav-link text-white" id="signInLink" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a></li> -->
+                <li class="nav-item"><a href="#" class="nav-link " id="signInLink" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a></li>
+
+            </li>
+            <li class="nav-item">
+              <!-- <a href="#" class="nav-link" id="signUpLink" data-bs-toggle="modal" data-bs-target="#registerModal">Registation</a> -->
+              <li class="nav-item"><a href="#" class="nav-link" id="signUpLink" data-bs-toggle="modal" data-bs-target="#registerModal">Registration</a></li>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- ///////////////////////////////////section 1 //////////////////////////////////////////////////////// -->
+    <section id="home">
+      <div class="container-fluid position-relative p-0">
+          <div class="row no-gutters">
+              <div class="col-12">
+                  <img src="https://cdn.pixabay.com/photo/2016/10/25/17/00/camera-1769414_1280.jpg" alt="img" class="img-fluid w-100">
+              </div>
+            </div>
+            </div>
+  </section>
+  
+  <!-- ///////////////////////////// ////////////////// section 2 ////////////////////////////////// -->
+<div id="nikon">
+  <div>
+  <h1 class="mx-2 pt-2">Nikon</h1>
+  <hr class="bg-white">
+  <!-- <!-/////////////////////////////////////////////////////////////////////////-  -->
+  <section id="collection">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Card 1 -->
+            <div class="col-md-3 container py-4">
+                <div class="card">
+                    <div class="card-img-container">
+                        <img src="https://1.bp.blogspot.com/-uS1e_yoyopw/XqLkiVQBirI/AAAAAAAAEOk/b3ZwgoNN-AIYVij6RkOfYQxFZ7DZ719jgCLcBGAsYHQ/w0/drone-camera-4k-techyleaf.jpeg" class="card-img-top zoom" alt="Clothing Collections">
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Clothing Collections</p>
+                        <p>Price per Day: $10</p>
+                        <button id="addDay1" class="btn btn-success">Add Day</button>
+                        <button id="removeDay1" class="btn btn-danger">Remove Day</button>
+                        <p>Day: <span id="quantity1">0</span></p>
+                        <p class="total">Total: $<span id="total1">0</span></p>
+                        <button id="orderNow1" class="btn btn-primary" data-toggle="modal" data-target="#orderModal">ORDER NOW</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="col-md-3 container py-4">
+                <div class="card">
+                    <div class="card-img-container">
+                        <img src="https://d3ekkp2oigezer.cloudfront.net/business/4902/blogs/4620/images/camaras-fotograficas-2021-7.jpg" class="card-img-top zoom" alt="Shoes Spring">
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Shoes Spring</p>
+                        <p>Price per Day: $10</p>
+                        <button id="addDay2" class="btn btn-success">Add Day</button>
+                        <button id="removeDay2" class="btn btn-danger">Remove Day</button>
+                        <p>Day: <span id="quantity2">0</span></p>
+                        <p class="total">Total: $<span id="total2">0</span></p>
+                        <button id="orderNow2" class="btn btn-primary" data-toggle="modal" data-target="#orderModal">ORDER NOW</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="col-md-3 container py-4">
+                <div class="card">
+                    <div class="card-img-container">
+                        <img src="https://th.bing.com/th/id/OIP.ej4t4vjK13JYgCRfbImHUAHaE7?rs=1&pid=ImgDetMain" class="card-img-top zoom" alt="Shoes Spring">
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Shoes Spring</p>
+                        <p>Price per Day: $10</p>
+                        <button id="addDay3" class="btn btn-success">Add Day</button>
+                        <button id="removeDay3" class="btn btn-danger">Remove Day</button>
+                        <p>Day: <span id="quantity3">0</span></p>
+                        <p class="total">Total: $<span id="total3">0</span></p>
+                        <button id="orderNow3" class="btn btn-primary" data-toggle="modal" data-target="#orderModal">ORDER NOW</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="col-md-3 container py-4">
+                <div class="card">
+                    <div class="card-img-container">
+                        <img src="https://www.imagesredefined.in/wp-content/uploads/2018/09/wedding-photography-tips.jpg" class="card-img-top zoom" alt="Shoes Spring">
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Shoes Spring</p>
+                        <p>Price per Day: $10</p>
+                        <button id="addDay4" class="btn btn-success">Add Day</button>
+                        <button id="removeDay4" class="btn btn-danger">Remove Day</button>
+                        <p>Day: <span id="quantity4">0</span></p>
+                        <p class="total">Total: $<span id="total4">0</span></p>
+                        <button id="orderNow4" class="btn btn-primary" data-toggle="modal" data-target="#orderModal">ORDER NOW</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Canon Section -->
+<section id="Canon">
+    <h1 class="mx-5 pt-5">Canon</h1>
+    <hr class="bg-white">
+    <div class="containe-fluidr">
+        <div class="row">
+            <!-- Card 5 -->
+            <div class="col-md-3 container py-4">
+                <div class="card">
+                    <div class="card-img-container">
+                        <img src="https://th.bing.com/th/id/OIP.c1IVQowd-DRX26opjic9KQHaEc?rs=1&pid=ImgDetMain" class="card-img-top zoom" alt="Accessories">
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Clothing Collections</p>
+                        <p>Price per Day: $120</p>
+                        <button id="addDay5" class="btn btn-success">Add Day</button>
+                        <button id="removeDay5" class="btn btn-danger">Remove Day</button>
+                        <p>Day: <span id="quantity5">0</span></p>
+                        <p class="total">Total: $<span id="total5">0</span></p>
+                        <button id="orderNow5" class="btn btn-primary" data-toggle="modal" data-target="#orderModal">ORDER NOW</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 6 -->
+            <div class="col-md-3 container py-4">
+                <div class="card">
+                    <div class="card-img-container">
+                        <img src="https://i.ytimg.com/vi/UT0zl_GkFJg/maxresdefault.jpg" class="card-img-top zoom" alt="Shoes Spring">
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Shoes Spring</p>
+                        <p>Price per Day: $10</p>
+                        <button id="addDay6" class="btn btn-success">Add Day</button>
+                        <button id="removeDay6" class="btn btn-danger">Remove Day</button>
+                        <p>Day: <span id="quantity6">0</span></p>
+                        <p class="total">Total: $<span id="total6">0</span></p>
+                        <button id="orderNow6" class="btn btn-primary" data-toggle="modal" data-target="#orderModal">ORDER NOW</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 7 -->
+            <div class="col-md-3 container py-4">
+                <div class="card">
+                    <div class="card-img-container">
+                        <img src="https://th.bing.com/th/id/OIP.QoDeuRRUUPZ8-TF_lOppWQAAAA?rs=1&pid=ImgDetMain" class="card-img-top zoom" alt="Shoes Spring">
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Shoes Spring</p>
+                        <p>Price per Day: $10</p>
+                        <button id="addDay7" class="btn btn-success">Add Day</button>
+                        <button id="removeDay7" class="btn btn-danger">Remove Day</button>
+                        <p>Day: <span id="quantity7">0</span></p>
+                        <p class="total">Total: $<span id="total7">0</span></p>
+                        <button id="orderNow7" class="btn btn-primary" data-toggle="modal" data-target="#orderModal">ORDER NOW</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 8 -->
+            <div class="col-md-3 container py-4">
+                <div class="card">
+                    <div class="card-img-container">
+                      <img src="https://th.bing.com/th/id/OIP.HwuA2gygMOv9F-Y6uKAfKwHaEO?rs=1&pid=ImgDetMain" class="card-img-top zoom" alt="Shoes Spring">
+
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Shoes Spring</p>
+                        <p>Price per Day: $10</p>
+                        <button id="addDay8" class="btn btn-success">Add Day</button>
+                        <button id="removeDay8" class="btn btn-danger">Remove Day</button>
+                        <p>Day: <span id="quantity8">0</span></p>
+                        <p class="total">Total: $<span id="total8">0</span></p>
+                <button id="orderNow7" class="btn btn-primary" data-toggle="modal" data-target="#orderModal" type="submit">ORDER NOW</button>
+                       
+                        <!-- <button id="orderNow8" class="btn btn-primary" data-toggle="modal" data-target="#orderModal">ORDER NOW</button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ////////////////////////////////////////////////////////////////////////////////////////// -->
+ 
+    <!-- Modal -->
+    <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="orderModalLabel">Order Details</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+
+                    </button>
+                </div>
+                <div class="modal-body">
+                    
+                    <form id="orderForm" method="POST" action="order1.php">
+                        
+                       
+                        <!-- Form fields -->
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="mobile" class="form-label">Mobile No</label>
+                            <input type="number" class="form-control" id="mobile" name="mobile" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="order" class="form-label">Order Date</label>
+                            <input type="date" class="form-control" id="order" name="order" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="return" class="form-label">Return Date</label>
+                            <input type="date" class="form-control" id="return" name="return" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Address</label>
+                            <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+                        </div>
+                        <!-- //////////////////////////////////////////////////// -->
+                        <div class="mb-3">
+                            <label for="paymentMethod" class="form-label">Payment Method</label>
+                            <select class="form-control" id="paymentMethod" name="paymentMethod" required>
+                                <option value="card">Cash On Delivery</option>
+                                <option value="phonepe">PhonePey</option>
+                            </select>
+                        </div>
+
+                        <div id="phonepePayment" class="form-group" style="display: none;">
+                            <div class="qr_code m20">
+                                <p>Scan the QR Code with any UPI App and pay the amount then download the source code.</p>
+                                <!-- <center><img src="" alt="QR CODE" class="get_qr m10"></center> -->
+                                <center><img src="https://i.postimg.cc/PJWXsRWY/Smart-Select-20230411-191218-Photos.jpg" style="width: 50%; height: 50%; "  class="im m10"></center>
+                                <div class="flex m20">
+                                    <label for="email">UTR/REFERENCE/TRANSACTION ID**</label>
+                                    <input type="number" class="form-control"  name="phone" placeholder="UTR/REFERENCE/TRANSACTION ID**">
+                               
+                                </div>
+                            </div>
+                    </div> 
+                    <!-- //////////////////////////////////////////////////// -->
+                        <div class="mb-3">
+                            <p>Days: <span id="orderDays">0</span></p>
+                            <p>Total: $<span id="orderTotal">0</span></p>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit Order</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- //////////////////////////////////////////////////////////////////////////// -->
+<!-- Contact Section -->
+<section class="py-5" id="contact">
+    <div class="container">
+        <h1 class="text-center mb-4">Contact Us</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <form id="contactForm" method="post" action="contact.php">
+                    <div class="form-group mb-3">
+                        <label for="name">Full Name</label>
+                        <input type="text" class="form-control" placeholder="Enter your name" name="name" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="email">Email address</label>
+                        <input type="email" class="form-control" placeholder="Enter your email" name="email" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="message">Message</label>
+                        <textarea class="form-control" rows="5" placeholder="Enter your message" name="message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <h5>Contact Information</h5>
+                <p><strong>Address:</strong> 431605, Nanded, Maharashtra, India</p>
+                <p><strong>Phone:</strong> +91 935 945 8009</p>
+                <p><strong>Email:</strong> gajanana19022000@gmail.com</p>
+                <div class="map-responsive">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.835434509374!2d144.9630579153169!3d-37.81410797975195!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0xf577d8b1e4b0b1e!2sFederation%20Square!5e0!3m2!1sen!2sau!4v1611810190848!5m2!1sen!2sau" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+  <!-- //////////////////////////////////// -->
+<footer class="bg-dark text-white py-4">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-3 container py-4">
+              <h3 style="color: aliceblue;">Portrait Photography</h3>
+              <p>The customer is at the heart of our<br>unique business model, which includes<br>design.</p>
+              <img src="https://i.postimg.cc/Nj9dgJ98/cards.png" alt="cards" class="img-fluid">
+          </div>
+          <div class="col-md-3 container py-4">
+              <h4>SERVIES</h4>
+              <ul class="list-unstyled">
+                  <li><a href="#sellers" class="text-white">Wedding Shooting</a></li>
+                  <li><a href="#sellers" class="text-white">Video edeating</a></li>
+                  <li><a href="#sellers" class="text-white">Dron</a></li>
+                  <li><a href="#sellers" class="text-white">Live Shotting</a></li>
+              </ul>
+          </div>
+          <div class="col-md-3 container py-4">
+              <h4 >FOR Custmer</h4>
+              <ul class="list-unstyled">
+                  <div class="nav-link">
+                  <li><a href="#contact" class="text-white">Contact Us</a></li>
+                  <li><a href="#" class="text-white">Payment Method</a></li>
+                  <li><a href="#" class="text-white">Delivery</a></li>
+                  <li><a href="#" class="text-white">Return and Exchange</a></li>
+              </ul>
+              </div>
+  <div class="col-md-3 container py-4">
+      <h5>Follow Us</h5>
+      <ul class="list-unstyled d-flex">
+          <li class="me-3">
+              <a href="https://www.facebook.com/profile.php?id=100083728363365" class="text-white d-flex justify-content-center align-items-center rounded-circle bg-primary" style="width: 40px; height: 40px;">
+                  <i class="fab fa-facebook"></i>
+              </a>
+          </li>
+          <li class="me-3">
+              <a href="https://www.instagram.com/gajanandeshmukh5823/" class="text-white d-flex justify-content-center align-items-center rounded-circle bg-danger" style="width: 40px; height: 40px;">
+                  <i class="fab fa-instagram"></i>
+              </a>
+          </li>
+          <li class="me-3">
+              <a href="https://web.whatsapp.com/" class="text-white d-flex justify-content-center align-items-center rounded-circle bg-success" style="width: 40px; height: 40px;">
+                  <i class="fab fa-whatsapp"></i>
+              </a>
+          </li>
+          <li>
+              <a href="https://www.linkedin.com/search/results/all/?fetchDeterministicClustersOnly=true&heroEntityKey=urn%3Ali%3Afsd_profile%3AACoAAD322BsBg4j2WpDbgZRXjKM5dip-dXM-6Ho&keywords=gajanan%20deshmukh&origin=RICH_QUERY_SUGGESTION&position=0&searchId=4602c0cd-dba8-4493-8566-5e2fddf421be&sid=%3B(*&spellCorrectionEnabled=false" class="text-white d-flex justify-content-center align-items-center rounded-circle bg-info" style="width: 40px; height: 40px;">
+                  <i class="fab fa-linkedin"></i>
+              </a>
+          </li>
+      </ul>
+    <h5>For refund, please write to<br> refunds@starair.in</h5>
+  </div>
+  <div>
+  <hr class="bg-white">
+      </div>
+      <div class="text-center mt-3">
+          <p>© 2024 Design By Gajanan Deshmukh</p>
+      </div>
+  </div>
+</footer>
+<!-- jQuery and Bootstrap Bundle with Popper -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+
+    // payment phone pay
+    $(document).ready(function() {
+            $('#paymentMethod').change(function() {
+                if ($(this).val() === 'phonepe') {
+                    $('#phonepePayment').show();
+                } else {
+                    $('#phonepePayment').hide();
+                }
+            });
+            
+        });
+document.addEventListener('DOMContentLoaded', function() {
+  const cards = document.querySelectorAll('.card');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+        entry.target.classList.remove('hide');
+      } else {
+        entry.target.classList.remove('show');
+        entry.target.classList.add('hide');
+      }
+    });
+  });
+  cards.forEach(card => {
+    observer.observe(card);
+  });
+});
+// /////////////////////////////////////////////
+document.addEventListener('DOMContentLoaded', function () {
+    function handleCard(cardNumber, pricePerDay) {
+        let quantityElement = document.getElementById(`quantity${cardNumber}`);
+        let totalElement = document.getElementById(`total${cardNumber}`);
+        let addDayButton = document.getElementById(`addDay${cardNumber}`);
+        let removeDayButton = document.getElementById(`removeDay${cardNumber}`);
+        let orderNowButton = document.getElementById(`orderNow${cardNumber}`);
+
+        let quantity = 0;
+
+        addDayButton.addEventListener('click', function () {
+            quantity++;
+            updateTotal();
+        });
+        removeDayButton.addEventListener('click', function () {
+            if (quantity > 0) {
+                quantity--;
+                updateTotal();
+            }
+        });
+
+        orderNowButton.addEventListener('click', function () {
+            document.getElementById('orderDays').textContent = quantity;
+            document.getElementById('orderTotal').textContent = `$${quantity * pricePerDay}`;
+        });
+
+        function updateTotal() {
+            quantityElement.textContent = quantity;
+            totalElement.textContent = quantity * pricePerDay;
+        }
+    }
+    handleCard(1, 10);
+    handleCard(2, 10);
+    handleCard(3, 10);
+    handleCard(4, 10);
+    handleCard(5, 120);
+    handleCard(6, 10);
+    handleCard(7, 10);
+    handleCard(8, 10);
+});
+// /////////////////////////////////////////////////////////
+    const chatButton = document.getElementById('chatButton');
+    const chatContainer = document.getElementById('chatContainer');
+    const chatBox = document.getElementById('chatBox');
+    const userInput = document.getElementById('userInput');
+    const sendButton = document.getElementById('sendButton');
+
+    // Toggle chat visibility and refresh if already visible
+    chatButton.addEventListener('click', () => {
+        if (chatContainer.style.display === 'none' || chatContainer.style.display === '') {
+            chatContainer.style.display = 'block';
+        } else {
+            chatContainer.style.display = 'none';
+            chatBox.innerHTML = ''; // Clear the chat box
+        }
+    });
+    // Function to append a new message to the chat box
+    function appendMessage(sender, message) {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message', sender === 'user' ? 'text-right' : 'text-left');
+        messageDiv.innerHTML = `<div class="alert ${sender === 'user' ? 'alert-primary' : 'alert-secondary'}" role="alert">${message}</div>`;
+        chatBox.appendChild(messageDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+    // Predefined responses (simple AI logic)
+    function getAIResponse(userMessage) {
+        const responses = {
+            "hi": "Hello! How can I help you?",
+            "hellow":"Hellow! How can I assist you today? 😊",
+            
+            "how are you": "I'm just a bunch of code, but I'm here to help!",
+            "what is your name": "I'm your friendly AI assistant!",
+            "bye": "Goodbye! Have a great day!",
+            "location": "Here is the LOcation: <a href='https://www.google.co.in/maps' target='_blank'>Visit Location</a>",
+            "database":"Hear Is Data base:<a href='database.php' >click hear</a>",
+              "email": "Here is the link to open your email: <a href='mailto:your-email@example.com'>Send Email</a>",
+             "phone": "Here is the link to call: <a href='tel:9359458009'>9359458009</a>",
+             "sms": "Here is the link to send a message: <a href='sms:9359458009'>Send Message to 9359458009</a>"
+
+        };
+        const lowerCaseMessage = userMessage.toLowerCase();
+        if (lowerCaseMessage === "date") {
+    const today = new Date();
+    const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    return "Today's date is " + date;
+}
+if (lowerCaseMessage === "time") {
+        const currentTime = new Date().toLocaleTimeString();
+        return `The current time is ${currentTime}`;
+    }
+        return responses[lowerCaseMessage] || "Sorry, I didn't understand that. Can you rephrase?";
+    }
+    // Event listener for the Send button
+    sendButton.addEventListener('click', () => {
+        const userMessage = userInput.value.trim();
+        if (userMessage) {
+            appendMessage('user', userMessage);
+            const aiResponse = getAIResponse(userMessage);
+            setTimeout(() => appendMessage('ai', aiResponse), 500);
+            userInput.value = '';
+        }
+    });
+    // Allow sending the message with the Enter key
+    userInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            sendButton.click();
+        }
+    });
+
+    document.getElementById('signInLink').addEventListener('mouseover', function() {
+            var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+            loginModal.show();
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+            
+            // Add the move-up class to trigger the animation
+            document.querySelector('.modal-content').classList.add('move-up');
+
+            // Submit the form data via AJAX
+            fetch('login.php', {
+                method: 'POST',
+                body: new FormData(document.getElementById('loginForm'))
+            }).then(response => response.text())
+              .then(data => {
+                  // Handle the response data
+                  console.log(data);
+                  // Hide the modal after the animation
+                  setTimeout(function() {
+                      var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+                      loginModal.hide();
+                      // Reset the form
+                      document.getElementById('loginForm').reset();
+                      // Refresh the page
+                      location.reload();
+                  }, 500); // Match the duration of the animation
+              }).catch(error => {
+                  console.error('Error:', error);
+              });
+        });
+
+        document.getElementById('signUpLink').addEventListener('mouseover', function() {
+        var registerModal = new bootstrap.Modal(document.getElementById('registerModal'));
+        registerModal.show();
+    });
+
+    document.getElementById('registerForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+        
+        // Add the move-up class to trigger the animation
+        document.querySelector('#registerModal .modal-content').classList.add('move-up');
+
+        // Submit the form data via AJAX
+        fetch('Registration.php', {
+            method: 'POST',
+            body: new FormData(document.getElementById('registerForm'))
+        }).then(response => response.text())
+          .then(data => {
+              // Handle the response data
+              console.log(data);
+              // Hide the modal after the animation
+              setTimeout(function() {
+                  var registerModal = new bootstrap.Modal(document.getElementById('registerModal'));
+                  registerModal.hide();
+                  // Reset the form
+                  document.getElementById('registerForm').reset();
+                  // Refresh the page
+                  location.reload();
+              }, 500); // Match the duration of the animation
+          }).catch(error => {
+              console.error('Error:', error);
+          });
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('contactForm').addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        const formData = new FormData(document.getElementById('contactForm'));
+
+        // Log form data for debugging
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }
+
+        fetch('contact.php', {
+            method: 'POST',
+            body: formData
+        }).then(response => response.text())
+          .then(data => {
+              // Handle the response data
+              console.log(data);
+              // Reset the form
+              document.getElementById('contactForm').reset();
+              // Optionally, show a success message or refresh the page
+              alert('Your message has been sent successfully!');
+          }).catch(error => {
+              console.error('Error:', error);
+          });
+    });
+});
+
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+                    // Submit the form data via AJAX
+          document.getElementById('orderForm').addEventListener('submit', function (event) {
+              event.preventDefault(); // Prevent the default form submission
+
+              fetch('order.php', {
+                  method: 'POST',
+                  body: new FormData(document.getElementById('orderForm'))
+              }).then(response => response.text())
+                .then(data => {
+                    // Handle the response data
+                    console.log(data);
+                    // Hide the modal after the animation
+                    setTimeout(function() {
+                        var orderModal = new bootstrap.Modal(document.getElementById('orderModal'));
+                        orderModal.hide();
+                        // Reset the form
+                        document.getElementById('orderForm').reset();
+                        // Refresh the page
+                        location.reload();
+                    }, 500); // Match the duration of the animation
+                }).catch(error => {
+                    console.error('Error:', error);
+                });
+          });
+
+          // Remove the animation class when the modal is shown again
+          document.getElementById('orderModal').addEventListener('shown.bs.modal', function () {
+              document.querySelector('#orderModal .modal-content').classList.remove('move-up');
+          });
+      });
+</script>
+</body>
+</html>
