@@ -261,7 +261,7 @@
 <!-- //////////////////////////////////////////////////////////////////////////////////////////// -->
     <!-- nav bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-primary sticky-top shadow-sm p-0">
-      <div class="">
+      <div class="container-fluid">
     <i class="fa fa-camera " aria-hidden="true" style="width: 30px; font-size: x-large;"></i>
       <p class="navbar-brand nav-link text-white">Portrait Photography</p>
         <button class="navbar-toggler " type="button" data--toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -483,7 +483,7 @@
                 </div>
                 <div class="modal-body">
                     
-                    <form id="orderForm" method="POST" action="order1.php">
+                    <form id="orderForm" method="POST" action="order.php">
                         
                        
                         <!-- Form fields -->
@@ -511,28 +511,15 @@
                             <label for="address" class="form-label">Address</label>
                             <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
                         </div>
-                        <!-- //////////////////////////////////////////////////// -->
                         <div class="mb-3">
                             <label for="paymentMethod" class="form-label">Payment Method</label>
                             <select class="form-control" id="paymentMethod" name="paymentMethod" required>
                                 <option value="card">Cash On Delivery</option>
-                                <option value="phonepe">PhonePey</option>
+                                <option value="phonepe">PhonePe</option>
                             </select>
                         </div>
 
-                        <div id="phonepePayment" class="form-group" style="display: none;">
-                            <div class="qr_code m20">
-                                <p>Scan the QR Code with any UPI App and pay the amount then download the source code.</p>
-                                <!-- <center><img src="" alt="QR CODE" class="get_qr m10"></center> -->
-                                <center><img src="https://i.postimg.cc/PJWXsRWY/Smart-Select-20230411-191218-Photos.jpg" style="width: 50%; height: 50%; "  class="im m10"></center>
-                                <div class="flex m20">
-                                    <label for="email">UTR/REFERENCE/TRANSACTION ID**</label>
-                                    <input type="number" class="form-control"  name="phone" placeholder="UTR/REFERENCE/TRANSACTION ID**">
-                               
-                                </div>
-                            </div>
-                    </div> 
-                    <!-- //////////////////////////////////////////////////// -->
+                        
                         <div class="mb-3">
                             <p>Days: <span id="orderDays">0</span></p>
                             <p>Total: $<span id="orderTotal">0</span></p>
@@ -647,17 +634,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
 
-    // payment phone pay
-    $(document).ready(function() {
-            $('#paymentMethod').change(function() {
-                if ($(this).val() === 'phonepe') {
-                    $('#phonepePayment').show();
-                } else {
-                    $('#phonepePayment').hide();
-                }
-            });
-            
-        });
 document.addEventListener('DOMContentLoaded', function() {
   const cards = document.querySelectorAll('.card');
   const observer = new IntersectionObserver(entries => {
